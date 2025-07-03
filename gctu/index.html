@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Tools Payment Portal | Mid-Semester</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7ff;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 1.5rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .student-info {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 1rem auto 0;
+            max-width: 600px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .student-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .school-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .school-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .school-link:active {
+            transform: translateY(0);
+        }
+        
+        .school-link i {
+            margin-right: 8px;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        .paid .card-icon {
+            background-color: rgba(76, 201, 240, 0.2);
+            color: var(--success);
+        }
+        
+        .owing .card-icon {
+            background-color: rgba(247, 37, 133, 0.2);
+            color: var(--danger);
+        }
+        
+        .card-amount {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .paid .card-amount {
+            color: var(--success);
+        }
+        
+        .owing .card-amount {
+            color: var(--danger);
+        }
+        
+        .card-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .tools-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tools-table thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+        }
+        
+        .tools-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .tools-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .tools-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-paid {
+            background-color: rgba(76, 201, 240, 0.2);
+            color: var(--success);
+        }
+        
+        .status-owing {
+            background-color: rgba(247, 37, 133, 0.2);
+            color: var(--danger);
+        }
+        
+        .table-footer {
+            background-color: rgba(0, 0, 0, 0.02);
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .tools-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .student-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+                padding: 0.8rem 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+            
+            .tools-table th, 
+            .tools-table td {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            
+            .student-info-item {
+                font-size: 0.85rem;
+            }
+            
+            .school-link {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card, .tools-table {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .tools-table { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Digital Tools Payment Portal</h1>
+            <p class="subtitle">Mid-Semester Payment Status</p>
+            
+            <div class="student-info">
+                <div class="student-info-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Student: <strong>KWOFIE ESSUMAN EUGENE</strong></span>
+                </div>
+                <div class="student-info-item">
+                    <i class="fas fa-id-card"></i>
+                    <span>ID: <strong>1701165388</strong></span>
+                </div>
+                <div class="student-info-item">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Program: <strong>BSc. INFORMATION TECHNOLOGY</strong></span>
+                </div>
+            </div>
+            
+            <a href="https://gctusip.gctu.edu.gh/#/" class="school-link" target="_blank">
+                <i class="fas fa-external-link-alt"></i> Visit School Website
+            </a>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="dashboard">
+            <div class="card paid">
+                <div class="card-header">
+                    <h3 class="card-title">Total Paid</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                <div class="card-amount">780 GHS</div>
+                <p class="card-description">Amount cleared for current semester</p>
+            </div>
+            
+            <div class="card owing">
+                <div class="card-header">
+                    <h3 class="card-title">Total Owing</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                </div>
+                <div class="card-amount">754 GHS</div>
+                <p class="card-description">Pending payments for digital tools</p>
+            </div>
+        </div>
+        
+        <h2 style="margin-bottom: 1rem; color: var(--dark);">Tools Payment Details</h2>
+        
+        <table class="tools-table">
+            <thead>
+                <tr>
+                    <th>Tool Name</th>
+                    <th>Price (GHS)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><i class="fas fa-paint-brush" style="margin-right: 8px; color: var(--primary);"></i> Graphic Design Software</td>
+                    <td>120</td>
+                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-code" style="margin-right: 8px; color: var(--primary);"></i> Programming IDE</td>
+                    <td>150</td>
+                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-film" style="margin-right: 8px; color: var(--primary);"></i> Video Editing Suite</td>
+                    <td>200</td>
+                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-file-alt" style="margin-right: 8px; color: var(--primary);"></i> Office Productivity Suite</td>
+                    <td>110</td>
+                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-shield-virus" style="margin-right: 8px; color: var(--primary);"></i> Antivirus Software</td>
+                    <td>80</td>
+                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-cloud" style="margin-right: 8px; color: var(--primary);"></i> Cloud Storage (1TB)</td>
+                    <td>120</td>
+                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-database" style="margin-right: 8px; color: var(--primary);"></i> Database Management System</td>
+                    <td>180</td>
+                    <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-network-wired" style="margin-right: 8px; color: var(--primary);"></i> Network Simulation Software</td>
+                    <td>160</td>
+                    <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-chart-bar" style="margin-right: 8px; color: var(--primary);"></i> Statistical Analysis Package</td>
+                    <td>140</td>
+                    <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-cube" style="margin-right: 8px; color: var(--primary);"></i> CAD Software</td>
+                    <td>220</td>
+                    <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-server" style="margin-right: 8px; color: var(--primary);"></i> Virtual Machine License</td>
+                    <td>90</td>
+                    <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-tasks" style="margin-right: 8px; color: var(--primary);"></i> Project Management Tool</td>
+                    <td>70</td>
+                    <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-code-branch" style="margin-right: 8px; color: var(--primary);"></i> Code Repository Subscription</td>
+                    <td>60</td>
+                    <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-pencil-ruler" style="margin-right: 8px; color: var(--primary);"></i> UI/UX Design Toolkit</td>
+                    <td>130</td>
+                    <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="table-footer">
+                    <td>Total</td>
+                    <td>1,534 GHS</td>
+                    <td>
+                        <span style="color: var(--success);">780 GHS Paid</span> | 
+                        <span style="color: var(--danger);">754 GHS Owing</span>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </main>
+    
+    <script>
+        // Add subtle animation to table rows
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('.tools-table tbody tr');
+            rows.forEach((row, index) => {
+                row.style.opacity = '0';
+                row.style.transform = 'translateY(10px)';
+                row.style.transition = `opacity 0.3s ease ${index * 0.05}s, transform 0.3s ease ${index * 0.05}s`;
+                setTimeout(() => {
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateY(0)';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
