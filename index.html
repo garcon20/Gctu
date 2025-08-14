@@ -305,11 +305,11 @@
         
         .letter-preview i {
             font-size: 3rem;
-            color: var(--primary);
+            color: var(--danger);
             margin-bottom: 1rem;
         }
         
-        .upload-btn {
+        .view-btn {
             background: var(--primary);
             color: white;
             border: none;
@@ -321,12 +321,32 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            margin-top: 1rem;
         }
         
-        .upload-btn:hover {
+        .view-btn:hover {
             background: var(--secondary);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .letter-details {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .letter-details p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .letter-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .letter-date {
+            font-size: 0.9rem;
+            color: var(--gray);
         }
         
         @media (max-width: 768px) {
@@ -404,13 +424,77 @@
         .tools-table { animation-delay: 0.4s; }
         .deadline-banner { animation-delay: 0.5s; }
         .letter-container { animation-delay: 0.6s; }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close-btn {
+            color: var(--gray);
+            float: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-btn:hover {
+            color: var(--danger);
+        }
+        
+        .modal-body {
+            margin-top: 1rem;
+        }
+        
+        .letter-pdf-container {
+            width: 100%;
+            height: 70vh;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
+        }
+        
+        .letter-pdf-container p {
+            color: var(--gray);
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>Digital Payment Portal</h1>
-            <p class="subtitle"> Payment Status</p>
+            <h1>Digital Tools Payment Portal</h1>
+            <p class="subtitle">Mid-Semester Payment Status</p>
             
             <div class="student-info">
                 <div class="student-info-item">
@@ -586,20 +670,40 @@
         </table>
         
         <div class="letter-container">
-            <h2><i class="fas fa-file-pdf" style="margin-right: 10px; color: var(--danger);"></i>Approval Letter Upload</h2>
-            <p style="margin-bottom: 1rem;">Please upload your approved session change letter (PDF format only)</p>
+            <h2><i class="fas fa-file-pdf" style="margin-right: 10px; color: var(--danger);"></i>Session Change Approval Letter</h2>
             
             <div class="letter-preview">
-                <i class="fas fa-file-upload"></i>
-                <p>No file uploaded yet</p>
-                <p style="font-size: 0.8rem; color: var(--gray);">Maximum file size: 5MB</p>
+                <i class="fas fa-file-pdf"></i>
+                <div class="letter-details">
+                    <p class="letter-title">Session_Change_Approval_Letter.pdf</p>
+                    <p class="letter-date">Approved: 10-08-2025</p>
+                </div>
             </div>
             
-            <button class="upload-btn">
-                <i class="fas fa-upload"></i> Upload Approval Letter
+            <button class="view-btn" id="viewLetterBtn">
+                <i class="fas fa-eye"></i> View Approval Letter
             </button>
         </div>
     </main>
+    
+    <!-- Modal for viewing the letter -->
+    <div id="letterModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Session Change Approval Letter</h2>
+            <div class="modal-body">
+                <p>Official approval letter for session change from morning to evening.</p>
+                <div class="letter-pdf-container">
+                    <p>[PDF preview of the approval letter would appear here]</p>
+                </div>
+                <div style="margin-top: 1rem; text-align: center;">
+                    <button class="view-btn" style="background: var(--danger);">
+                        <i class="fas fa-download"></i> Download PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <script>
         // Add subtle animation to table rows
@@ -615,24 +719,27 @@
                 }, 100);
             });
             
-            // Simulate file upload functionality
-            const uploadBtn = document.querySelector('.upload-btn');
-            const letterPreview = document.querySelector('.letter-preview');
+            // Modal functionality
+            const modal = document.getElementById("letterModal");
+            const btn = document.getElementById("viewLetterBtn");
+            const span = document.getElementsByClassName("close-btn")[0];
             
-            uploadBtn.addEventListener('click', function() {
-                // This would be replaced with actual file upload logic
-                letterPreview.innerHTML = `
-                    <i class="fas fa-file-pdf" style="color: var(--danger); font-size: 3rem;"></i>
-                    <p>Session_Change_Approval.pdf</p>
-                    <p style="font-size: 0.8rem; color: var(--gray);">Uploaded: ${new Date().toLocaleDateString()}</p>
-                    <button style="margin-top: 1rem; background: none; border: none; color: var(--primary); cursor: pointer;">
-                        <i class="fas fa-eye"></i> View
-                    </button>
-                `;
-                
-                // Show success message
-                alert('Approval letter uploaded successfully!');
-            });
+            btn.onclick = function() {
+                modal.style.display = "block";
+                document.body.style.overflow = "hidden"; // Prevent scrolling when modal is open
+            }
+            
+            span.onclick = function() {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto"; // Re-enable scrolling
+            }
+            
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                    document.body.style.overflow = "auto"; // Re-enable scrolling
+                }
+            }
         });
     </script>
 </body>
