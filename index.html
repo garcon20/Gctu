@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Tools Payment Portal | Mid-Semester</title>
+    <title>Digital Tools Payment Portal | Level 300 Semester</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Previous CSS remains the same until .tools-table */
         :root {
             --primary: #4361ee;
             --secondary: #3f37c9;
@@ -15,7 +16,7 @@
             --dark: #212529;
             --gray: #6c757d;
             --white: #ffffff;
-            --warning: #f8961e;
+            --semester-complete: #38b000;
         }
         
         * {
@@ -157,14 +158,14 @@
             color: var(--success);
         }
         
+        .complete .card-icon {
+            background-color: rgba(56, 176, 0, 0.2);
+            color: var(--semester-complete);
+        }
+        
         .owing .card-icon {
             background-color: rgba(247, 37, 133, 0.2);
             color: var(--danger);
-        }
-        
-        .pending .card-icon {
-            background-color: rgba(248, 150, 30, 0.2);
-            color: var(--warning);
         }
         
         .card-amount {
@@ -177,17 +178,44 @@
             color: var(--success);
         }
         
-        .owing .card-amount {
-            color: var(--danger);
+        .complete .card-amount {
+            color: var(--semester-complete);
         }
         
-        .pending .card-amount {
-            color: var(--warning);
+        .owing .card-amount {
+            color: var(--danger);
         }
         
         .card-description {
             color: var(--gray);
             font-size: 0.9rem;
+        }
+        
+        /* Semester Sections */
+        .semester-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .semester-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .semester-badge {
+            background: var(--semester-complete);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+        
+        .semester-badge.current {
+            background: var(--primary);
         }
         
         .tools-table {
@@ -197,12 +225,16 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
         
         .tools-table thead {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
+        }
+        
+        .complete-table thead {
+            background: linear-gradient(135deg, var(--semester-complete), #2a9d00);
         }
         
         .tools-table th {
@@ -233,14 +265,14 @@
             color: var(--success);
         }
         
+        .status-complete {
+            background-color: rgba(56, 176, 0, 0.2);
+            color: var(--semester-complete);
+        }
+        
         .status-owing {
             background-color: rgba(247, 37, 133, 0.2);
             color: var(--danger);
-        }
-        
-        .status-pending {
-            background-color: rgba(248, 150, 30, 0.2);
-            color: var(--warning);
         }
         
         .table-footer {
@@ -248,105 +280,25 @@
             font-weight: 600;
         }
         
-        .deadline-banner {
-            background: linear-gradient(135deg, var(--danger), #d90429);
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-        
-        .deadline-banner h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .deadline-banner .date {
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-        
-        .letter-container {
+        .cost-breakdown {
             background: var(--white);
             border-radius: 12px;
             padding: 1.5rem;
+            margin-top: 1.5rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
         }
         
-        .letter-container h2 {
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-        
-        .letter-preview {
-            border: 2px dashed var(--gray);
-            border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            background: rgba(0, 0, 0, 0.02);
-            min-height: 200px;
+        .breakdown-item {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
         
-        .letter-preview i {
-            font-size: 3rem;
-            color: var(--danger);
-            margin-bottom: 1rem;
-        }
-        
-        .view-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
+        .breakdown-item:last-child {
+            border-bottom: none;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-        
-        .view-btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .letter-details {
-            text-align: center;
-            margin-top: 1rem;
-        }
-        
-        .letter-details p {
-            margin-bottom: 0.5rem;
-        }
-        
-        .letter-title {
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .letter-date {
-            font-size: 0.9rem;
-            color: var(--gray);
+            font-size: 1.1rem;
         }
         
         @media (max-width: 768px) {
@@ -370,12 +322,13 @@
                 padding: 0.8rem 1rem;
             }
             
-            .deadline-banner h2 {
-                font-size: 1.2rem;
+            .semester-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
             
-            .deadline-banner .date {
-                font-size: 1.5rem;
+            .semester-badge {
+                margin-bottom: 0.5rem;
             }
         }
         
@@ -402,10 +355,6 @@
                 padding: 0.5rem 0.8rem;
                 font-size: 0.9rem;
             }
-            
-            .letter-preview {
-                padding: 1rem;
-            }
         }
         
         /* Animation */
@@ -414,87 +363,20 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .card, .tools-table, .deadline-banner, .letter-container {
+        .card, .tools-table, .cost-breakdown {
             animation: fadeIn 0.6s ease forwards;
         }
         
         .card:nth-child(1) { animation-delay: 0.1s; }
         .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .tools-table { animation-delay: 0.4s; }
-        .deadline-banner { animation-delay: 0.5s; }
-        .letter-container { animation-delay: 0.6s; }
-        
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            overflow: auto;
-        }
-        
-        .modal-content {
-            background-color: var(--white);
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            animation: modalFadeIn 0.3s ease;
-        }
-        
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .close-btn {
-            color: var(--gray);
-            float: right;
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        
-        .close-btn:hover {
-            color: var(--danger);
-        }
-        
-        .modal-body {
-            margin-top: 1rem;
-        }
-        
-        .letter-pdf-container {
-            width: 100%;
-            height: 70vh;
-            border: 1px solid var(--gray);
-            border-radius: 4px;
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f9f9f9;
-        }
-        
-        .letter-pdf-container p {
-            color: var(--gray);
-        }
+        .tools-table { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
             <h1>Digital Tools Payment Portal</h1>
-            <p class="subtitle">Mid-Semester Payment Status</p>
+            <p class="subtitle">Level 300 Semester - Online Learning Materials</p>
             
             <div class="student-info">
                 <div class="student-info-item">
@@ -509,6 +391,10 @@
                     <i class="fas fa-laptop-code"></i>
                     <span>Program: <strong>BSc. INFORMATION TECHNOLOGY</strong></span>
                 </div>
+                <div class="student-info-item">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Level: <strong>300</strong></span>
+                </div>
             </div>
             
             <a href="https://gctusip.gctu.edu.gh/#/" class="school-link" target="_blank">
@@ -518,192 +404,227 @@
     </header>
     
     <main class="container">
-        <div class="deadline-banner">
-            <h2>PAYMENT DEADLINE</h2>
-            <div class="date">19-08-2025</div>
-            <p>All pending payments must be cleared by this date</p>
-        </div>
-        
         <div class="dashboard">
-            <div class="card paid">
+            <div class="card complete">
                 <div class="card-header">
-                    <h3 class="card-title">Total Paid</h3>
+                    <h3 class="card-title">Previous Semester Complete</h3>
                     <div class="card-icon">
-                        <i class="fas fa-check-circle"></i>
+                        <i class="fas fa-trophy"></i>
                     </div>
                 </div>
                 <div class="card-amount">1,534 GHS</div>
-                <p class="card-description">All digital tools payments cleared</p>
+                <p class="card-description">All items fully paid for previous semester</p>
             </div>
             
-            <div class="card pending">
+            <div class="card owing">
                 <div class="card-header">
-                    <h3 class="card-title">Session Change Fee</h3>
+                    <h3 class="card-title">Current Semester Balance</h3>
                     <div class="card-icon">
-                        <i class="fas fa-clock"></i>
+                        <i class="fas fa-exclamation-circle"></i>
                     </div>
                 </div>
-                <div class="card-amount">2,945 GHS</div>
-                <p class="card-description">Pending approval and payment</p>
+                <div class="card-amount">850 GHS</div>
+                <p class="card-description">Online teaching & learning materials for Level 300</p>
             </div>
         </div>
         
-        <h2 style="margin-bottom: 1rem; color: var(--dark);">Digital Tools Payment Details</h2>
-        
-        <table class="tools-table">
-            <thead>
-                <tr>
-                    <th>Tool Name</th>
-                    <th>Price (GHS)</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><i class="fas fa-paint-brush" style="margin-right: 8px; color: var(--primary);"></i> Graphic Design Software</td>
-                    <td>120</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-code" style="margin-right: 8px; color: var(--primary);"></i> Programming IDE</td>
-                    <td>150</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-film" style="margin-right: 8px; color: var(--primary);"></i> Video Editing Suite</td>
-                    <td>200</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-file-alt" style="margin-right: 8px; color: var(--primary);"></i> Office Productivity Suite</td>
-                    <td>110</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-shield-virus" style="margin-right: 8px; color: var(--primary);"></i> Antivirus Software</td>
-                    <td>80</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-cloud" style="margin-right: 8px; color: var(--primary);"></i> Cloud Storage (1TB)</td>
-                    <td>120</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-database" style="margin-right: 8px; color: var(--primary);"></i> Database Management System</td>
-                    <td>180</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-network-wired" style="margin-right: 8px; color: var(--primary);"></i> Network Simulation Software</td>
-                    <td>160</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-chart-bar" style="margin-right: 8px; color: var(--primary);"></i> Statistical Analysis Package</td>
-                    <td>140</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-cube" style="margin-right: 8px; color: var(--primary);"></i> CAD Software</td>
-                    <td>220</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-server" style="margin-right: 8px; color: var(--primary);"></i> Virtual Machine License</td>
-                    <td>90</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-tasks" style="margin-right: 8px; color: var(--primary);"></i> Project Management Tool</td>
-                    <td>70</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-code-branch" style="margin-right: 8px; color: var(--primary);"></i> Code Repository Subscription</td>
-                    <td>60</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-                <tr>
-                    <td><i class="fas fa-pencil-ruler" style="margin-right: 8px; color: var(--primary);"></i> UI/UX Design Toolkit</td>
-                    <td>130</td>
-                    <td><span class="status status-paid">Paid <i class="fas fa-check"></i></span></td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr class="table-footer">
-                    <td>Total</td>
-                    <td>1,534 GHS</td>
-                    <td>
-                        <span style="color: var(--success);">1,534 GHS Paid</span>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-        
-        <h2 style="margin-bottom: 1rem; color: var(--dark);">Session Change Request</h2>
-        
-        <table class="tools-table">
-            <thead>
-                <tr>
-                    <th>Description</th>
-                    <th>Amount (GHS)</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><i class="fas fa-exchange-alt" style="margin-right: 8px; color: var(--primary);"></i> Morning to Evening Session Change</td>
-                    <td>2,945</td>
-                    <td><span class="status status-pending">Pending Payment <i class="fas fa-clock"></i></span></td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr class="table-footer">
-                    <td>Total Due</td>
-                    <td>2,945 GHS</td>
-                    <td>
-                        <span style="color: var(--warning);">Payment Required</span>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-        
-        <div class="letter-container">
-            <h2><i class="fas fa-file-pdf" style="margin-right: 10px; color: var(--danger);"></i>Session Change Approval Letter</h2>
-            
-            <div class="letter-preview">
-                <i class="fas fa-file-pdf"></i>
-                <div class="letter-details">
-                    <p class="letter-title">Session_Change_Approval_Letter.pdf</p>
-                    <p class="letter-date">Approved: 10-08-2025</p>
-                </div>
+        <!-- Previous Semester - All Paid -->
+        <div class="semester-section">
+            <div class="semester-header">
+                <span class="semester-badge">COMPLETE</span>
+                <h2>Previous Semester - All Payments Settled</h2>
             </div>
             
-            <button class="view-btn" id="viewLetterBtn">
-                <i class="fas fa-eye"></i> View Approval Letter
-            </button>
+            <table class="tools-table complete-table">
+                <thead>
+                    <tr>
+                        <th>Tool Name</th>
+                        <th>Price (GHS)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><i class="fas fa-paint-brush" style="margin-right: 8px; color: var(--semester-complete);"></i> Graphic Design Software</td>
+                        <td>120</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-code" style="margin-right: 8px; color: var(--semester-complete);"></i> Programming IDE</td>
+                        <td>150</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-film" style="margin-right: 8px; color: var(--semester-complete);"></i> Video Editing Suite</td>
+                        <td>200</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-file-alt" style="margin-right: 8px; color: var(--semester-complete);"></i> Office Productivity Suite</td>
+                        <td>110</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-shield-virus" style="margin-right: 8px; color: var(--semester-complete);"></i> Antivirus Software</td>
+                        <td>80</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-cloud" style="margin-right: 8px; color: var(--semester-complete);"></i> Cloud Storage (1TB)</td>
+                        <td>120</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-database" style="margin-right: 8px; color: var(--semester-complete);"></i> Database Management System</td>
+                        <td>180</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-network-wired" style="margin-right: 8px; color: var(--semester-complete);"></i> Network Simulation Software</td>
+                        <td>160</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-chart-bar" style="margin-right: 8px; color: var(--semester-complete);"></i> Statistical Analysis Package</td>
+                        <td>140</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-cube" style="margin-right: 8px; color: var(--semester-complete);"></i> CAD Software</td>
+                        <td>220</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-server" style="margin-right: 8px; color: var(--semester-complete);"></i> Virtual Machine License</td>
+                        <td>90</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-tasks" style="margin-right: 8px; color: var(--semester-complete);"></i> Project Management Tool</td>
+                        <td>70</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-code-branch" style="margin-right: 8px; color: var(--semester-complete);"></i> Code Repository Subscription</td>
+                        <td>60</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-pencil-ruler" style="margin-right: 8px; color: var(--semester-complete);"></i> UI/UX Design Toolkit</td>
+                        <td>130</td>
+                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="table-footer">
+                        <td>Total</td>
+                        <td>1,534 GHS</td>
+                        <td>
+                            <span style="color: var(--semester-complete);">Fully Paid <i class="fas fa-trophy"></i></span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        
+        <!-- New Level 300 Online Learning Materials -->
+        <div class="semester-section">
+            <div class="semester-header">
+                <span class="semester-badge current">CURRENT</span>
+                <h2>Level 300 - Online Teaching & Learning Materials</h2>
+            </div>
+            
+            <table class="tools-table">
+                <thead>
+                    <tr>
+                        <th>Material Name</th>
+                        <th>Price (GHS)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><i class="fas fa-book" style="margin-right: 8px; color: var(--primary);"></i> Advanced Programming E-Books</td>
+                        <td>85</td>
+                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-video" style="margin-right: 8px; color: var(--primary);"></i> Video Lecture Series Subscription</td>
+                        <td>120</td>
+                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-laptop-code" style="margin-right: 8px; color: var(--primary);"></i> Cloud Development Environment</td>
+                        <td>150</td>
+                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-database" style="margin-right: 8px; color: var(--primary);"></i> Advanced Database Systems License</td>
+                        <td>110</td>
+                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-network-wired" style="margin-right: 8px; color: var(--primary);"></i> Network Security Lab Access</td>
+                        <td>95</td>
+                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-mobile-alt" style="margin-right: 8px; color: var(--primary);"></i> Mobile Development Framework</td>
+                        <td>80</td>
+                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-robot" style="margin-right: 8px; color: var(--primary);"></i> AI & Machine Learning Platform</td>
+                        <td>130</td>
+                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-chalkboard-teacher" style="margin-right: 8px; color: var(--primary);"></i> Virtual Classroom Credits</td>
+                        <td>60</td>
+                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-file-certificate" style="margin-right: 8px; color: var(--primary);"></i> Online Proctoring Service</td>
+                        <td>40</td>
+                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="table-footer">
+                        <td>Total</td>
+                        <td>850 GHS</td>
+                        <td>
+                            <span style="color: var(--danger);">850 GHS Owing</span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        
+        <div class="cost-breakdown">
+            <h3 style="margin-bottom: 1rem;">Online Learning Cost Breakdown</h3>
+            <div class="breakdown-item">
+                <span>Digital Textbooks & Resources</span>
+                <span>205 GHS</span>
+            </div>
+            <div class="breakdown-item">
+                <span>Software Platforms & Licenses</span>
+                <span>470 GHS</span>
+            </div>
+            <div class="breakdown-item">
+                <span>Virtual Lab & Environment Access</span>
+                <span>145 GHS</span>
+            </div>
+            <div class="breakdown-item">
+                <span>Administrative & Service Fees</span>
+                <span>30 GHS</span>
+            </div>
+            <div class="breakdown-item">
+                <span>Total Level 300 Online Materials</span>
+                <span>850 GHS</span>
+            </div>
         </div>
     </main>
-    
-    <!-- Modal for viewing the letter -->
-    <div id="letterModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Session Change Approval Letter</h2>
-            <div class="modal-body">
-                <p>Official approval letter for session change from morning to evening.</p>
-                <div class="letter-pdf-container">
-                    <p>[PDF preview of the approval letter would appear here]</p>
-                </div>
-                <div style="margin-top: 1rem; text-align: center;">
-                    <button class="view-btn" style="background: var(--danger);">
-                        <i class="fas fa-download"></i> Download PDF
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
     
     <script>
         // Add subtle animation to table rows
@@ -718,28 +639,6 @@
                     row.style.transform = 'translateY(0)';
                 }, 100);
             });
-            
-            // Modal functionality
-            const modal = document.getElementById("letterModal");
-            const btn = document.getElementById("viewLetterBtn");
-            const span = document.getElementsByClassName("close-btn")[0];
-            
-            btn.onclick = function() {
-                modal.style.display = "block";
-                document.body.style.overflow = "hidden"; // Prevent scrolling when modal is open
-            }
-            
-            span.onclick = function() {
-                modal.style.display = "none";
-                document.body.style.overflow = "auto"; // Re-enable scrolling
-            }
-            
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                    document.body.style.overflow = "auto"; // Re-enable scrolling
-                }
-            }
         });
     </script>
 </body>
