@@ -3,643 +3,872 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Tools Payment Portal | Level 300 Semester</title>
+    <title>GTT IT Workshop Tour</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Previous CSS remains the same until .tools-table */
+        /* CSS Variables for Theming */
         :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --success: #4cc9f0;
-            --danger: #f72585;
+            --primary: #0056b3;
+            --primary-dark: #003d82;
+            --primary-light: #4d8ad3;
+            --secondary: #ffcc00;
+            --secondary-dark: #e6b800;
+            --accent: #28a745;
+            --dark: #333333;
             --light: #f8f9fa;
-            --dark: #212529;
             --gray: #6c757d;
-            --white: #ffffff;
-            --semester-complete: #38b000;
+            --gray-light: #e9ecef;
+            --danger: #dc3545;
+            --border-radius: 12px;
+            --border-radius-sm: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --box-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+            --header-height: 70px;
+            --footer-height: 60px;
         }
-        
+
+        /* Dark Mode Variables */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --light: #1a1a1a;
+                --dark: #f8f9fa;
+                --gray-light: #2d2d2d;
+                --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                --box-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        /* Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: #f5f7ff;
-            padding: 0;
-            margin: 0;
+
+        html {
+            scroll-behavior: smooth;
         }
-        
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
         .container {
-            width: 100%;
+            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 15px;
         }
-        
+
+        /* App Layout */
+        .app {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--white);
-            padding: 1.5rem 0;
-            text-align: center;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-            position: relative;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            height: var(--header-height);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: var(--box-shadow);
         }
-        
-        .student-info {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(5px);
-            padding: 0.8rem;
-            border-radius: 8px;
-            margin: 1rem auto 0;
-            max-width: 600px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-        }
-        
-        .student-info-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .school-link {
-            display: inline-block;
-            margin-top: 1rem;
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            background: rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .school-link:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .school-link:active {
-            transform: translateY(0);
-        }
-        
-        .school-link i {
-            margin-right: 8px;
-        }
-        
-        h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .subtitle {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-        
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .card-header {
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            height: 100%;
         }
-        
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--dark);
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        
-        .card-icon {
-            width: 40px;
-            height: 40px;
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary);
+            box-shadow: var(--box-shadow);
+            font-size: 1.2rem;
         }
-        
-        .paid .card-icon {
-            background-color: rgba(76, 201, 240, 0.2);
-            color: var(--success);
-        }
-        
-        .complete .card-icon {
-            background-color: rgba(56, 176, 0, 0.2);
-            color: var(--semester-complete);
-        }
-        
-        .owing .card-icon {
-            background-color: rgba(247, 37, 133, 0.2);
-            color: var(--danger);
-        }
-        
-        .card-amount {
-            font-size: 1.75rem;
+
+        .school-name {
+            font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            line-height: 1.2;
         }
-        
-        .paid .card-amount {
-            color: var(--success);
-        }
-        
-        .complete .card-amount {
-            color: var(--semester-complete);
-        }
-        
-        .owing .card-amount {
-            color: var(--danger);
-        }
-        
-        .card-description {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        /* Semester Sections */
-        .semester-section {
-            margin-bottom: 2.5rem;
-        }
-        
-        .semester-header {
+
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
         }
-        
-        .semester-badge {
-            background: var(--semester-complete);
+
+        .mobile-menu-btn:active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: var(--header-height);
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: calc(100vh - var(--header-height));
+            background-color: var(--light);
+            box-shadow: var(--box-shadow-lg);
+            transition: var(--transition);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        nav.open {
+            right: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        nav li {
+            margin-bottom: 10px;
+        }
+
+        nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 12px 15px;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
+        }
+
+        nav a:hover, nav a.active {
+            background-color: var(--primary-light);
             color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-right: 1rem;
         }
-        
-        .semester-badge.current {
-            background: var(--primary);
+
+        nav a i {
+            width: 20px;
+            text-align: center;
         }
-        
-        .tools-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--white);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .nav-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            margin-top: var(--header-height);
+            padding-bottom: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 86, 179, 0.85), rgba(0, 61, 130, 0.9)), url('https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
             margin-bottom: 1.5rem;
         }
-        
-        .tools-table thead {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--white);
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        
-        .complete-table thead {
-            background: linear-gradient(135deg, var(--semester-complete), #2a9d00);
+
+        .hero p {
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
         }
-        
-        .tools-table th {
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--light);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray-light);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h3 i {
+            color: var(--secondary);
+        }
+
+        /* Workshop Details */
+        .workshop-details .card ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .workshop-details .card li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Fees Section */
+        .fees-section {
+            background-color: var(--gray-light);
+            padding: 1.5rem 0;
+            margin: 2rem 0;
+            border-radius: var(--border-radius);
+        }
+
+        .fees-table {
+            background-color: var(--light);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .fees-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .fees-table th, .fees-table td {
             padding: 1rem;
             text-align: left;
-            font-weight: 600;
+            border-bottom: 1px solid var(--gray-light);
         }
-        
-        .tools-table td {
-            padding: 1rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+        .fees-table thead {
+            background-color: var(--primary);
+            color: white;
         }
-        
-        .tools-table tr:last-child td {
+
+        .fees-table tbody tr:last-child td {
             border-bottom: none;
         }
-        
-        .status {
-            display: inline-block;
-            padding: 0.35rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
+
+        .fee-amount {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .highlight {
+            background-color: rgba(255, 204, 0, 0.2);
+            font-weight: 600;
+        }
+
+        /* Registration Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
             font-weight: 500;
         }
-        
-        .status-paid {
-            background-color: rgba(76, 201, 240, 0.2);
-            color: var(--success);
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius-sm);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--light);
+            color: var(--dark);
         }
-        
-        .status-complete {
-            background-color: rgba(56, 176, 0, 0.2);
-            color: var(--semester-complete);
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
         }
-        
-        .status-owing {
-            background-color: rgba(247, 37, 133, 0.2);
-            color: var(--danger);
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 1.5rem 0;
+            margin-top: auto;
         }
-        
-        .table-footer {
-            background-color: rgba(0, 0, 0, 0.02);
-            font-weight: 600;
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
-        
-        .cost-breakdown {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
         }
-        
-        .breakdown-item {
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
             display: flex;
-            justify-content: space-between;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            align-items: center;
+            gap: 8px;
         }
-        
-        .breakdown-item:last-child {
-            border-bottom: none;
-            font-weight: 600;
-            font-size: 1.1rem;
+
+        .footer-column a:hover {
+            color: var(--secondary);
         }
-        
-        @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
+
+        .copyright {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--accent);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-lg);
+            z-index: 1100;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 90%;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            :root {
+                --header-height: 80px;
             }
             
-            .tools-table {
-                display: block;
-                overflow-x: auto;
+            .mobile-menu-btn {
+                display: none;
             }
             
-            h1 {
-                font-size: 1.5rem;
+            nav {
+                position: static;
+                width: auto;
+                height: auto;
+                background: transparent;
+                box-shadow: none;
+                flex-direction: row;
+                padding: 0;
             }
             
-            .student-info {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-                padding: 0.8rem 1rem;
+            nav ul {
+                display: flex;
+                margin-top: 0;
+                gap: 5px;
             }
             
-            .semester-header {
-                flex-direction: column;
-                align-items: flex-start;
+            nav a {
+                color: white;
+                padding: 8px 15px;
             }
             
-            .semester-badge {
-                margin-bottom: 0.5rem;
+            nav a:hover, nav a.active {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+            
+            .nav-overlay {
+                display: none;
+            }
+            
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .workshop-details {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .card {
-                padding: 1rem;
-            }
-            
-            .tools-table th, 
-            .tools-table td {
-                padding: 0.75rem;
-                font-size: 0.9rem;
-            }
-            
-            .student-info-item {
-                font-size: 0.85rem;
-            }
-            
-            .school-link {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.9rem;
+
+        @media (min-width: 992px) {
+            .workshop-details {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
-        
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .card, .tools-table, .cost-breakdown {
-            animation: fadeIn 0.6s ease forwards;
-        }
-        
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .tools-table { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Digital Tools Payment Portal</h1>
-            <p class="subtitle">Level 300 Semester - Online Learning Materials</p>
-            
-            <div class="student-info">
-                <div class="student-info-item">
-                    <i class="fas fa-user-graduate"></i>
-                    <span>Student: <strong>KWOFIE ESSUMAN EUGENE</strong></span>
-                </div>
-                <div class="student-info-item">
-                    <i class="fas fa-id-card"></i>
-                    <span>ID: <strong>1701165388</strong></span>
-                </div>
-                <div class="student-info-item">
-                    <i class="fas fa-laptop-code"></i>
-                    <span>Program: <strong>BSc. INFORMATION TECHNOLOGY</strong></span>
-                </div>
-                <div class="student-info-item">
-                    <i class="fas fa-layer-group"></i>
-                    <span>Level: <strong>300</strong></span>
+    <div class="app">
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo-container">
+                        <div class="logo">GTT</div>
+                        <div class="school-name">Ghana Communication Technology</div>
+                    </div>
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <nav>
+                        <ul>
+                            <li><a href="#home" class="active"><i class="fas fa-home"></i> Home</a></li>
+                            <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
+                            <li><a href="#workshop"><i class="fas fa-laptop-code"></i> Workshop</a></li>
+                            <li><a href="#fees"><i class="fas fa-money-bill-wave"></i> Fees</a></li>
+                            <li><a href="#register"><i class="fas fa-user-plus"></i> Register</a></li>
+                            <li><a href="#contact"><i class="fas fa-phone"></i> Contact</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
-            
-            <a href="https://gctusip.gctu.edu.gh/#/" class="school-link" target="_blank">
-                <i class="fas fa-external-link-alt"></i> Visit School Website
-            </a>
-        </div>
-    </header>
-    
-    <main class="container">
-        <div class="dashboard">
-            <div class="card complete">
-                <div class="card-header">
-                    <h3 class="card-title">Previous Semester Complete</h3>
-                    <div class="card-icon">
-                        <i class="fas fa-trophy"></i>
+        </header>
+        
+        <!-- Navigation Overlay -->
+        <div class="nav-overlay"></div>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Hero Section -->
+            <section class="hero" id="home">
+                <div class="container">
+                    <h1>IT Educational Workshop Tour</h1>
+                    <p>An immersive learning experience for Level 300 IT students. Explore cutting-edge technologies and industry practices with Ghana Telecommunication Technology.</p>
+                    <a href="#register" class="btn"><i class="fas fa-user-plus"></i> Register Now</a>
+                </div>
+            </section>
+
+            <div class="container">
+                <!-- About Section -->
+                <section class="section" id="about">
+                    <h2 class="section-title"><i class="fas fa-info-circle"></i> About the Workshop</h2>
+                    <div class="card">
+                        <p>This intensive 5-day workshop is specifically designed for Level 300 IT students to bridge the gap between academic knowledge and industry requirements. Participants will gain hands-on experience with state-of-the-art telecommunications equipment and learn from industry experts.</p>
+                    </div>
+                </section>
+
+                <!-- Workshop Details -->
+                <section class="section" id="workshop">
+                    <h2 class="section-title"><i class="fas fa-laptop-code"></i> Workshop Details</h2>
+                    <div class="workshop-details">
+                        <div class="card">
+                            <h3><i class="fas fa-calendar-alt"></i> Schedule</h3>
+                            <ul>
+                                <li>Day 1: Telecom Infrastructure</li>
+                                <li>Day 2: Network Security</li>
+                                <li>Day 3: Wireless Systems</li>
+                                <li>Day 4: Data Center Operations</li>
+                                <li>Day 5: Career Applications</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h3><i class="fas fa-bullseye"></i> Objectives</h3>
+                            <ul>
+                                <li>Understand core telecom principles</li>
+                                <li>Gain practical equipment experience</li>
+                                <li>Learn emerging technologies</li>
+                                <li>Develop problem-solving skills</li>
+                                <li>Network with professionals</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h3><i class="fas fa-users"></i> Audience</h3>
+                            <ul>
+                                <li>Level 300 IT students</li>
+                                <li>Basic networking knowledge</li>
+                                <li>Telecom career interest</li>
+                                <li>Hands-on experience seekers</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Fees Section -->
+                <section class="section fees-section" id="fees">
+                    <h2 class="section-title"><i class="fas fa-money-bill-wave"></i> Workshop Fees</h2>
+                    <div class="fees-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Fee Category</th>
+                                    <th>Description</th>
+                                    <th>Amount (GHS)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Registration Fee</td>
+                                    <td>One-time registration and processing</td>
+                                    <td class="fee-amount">250.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Tuition Fee</td>
+                                    <td>Complete workshop instruction and materials</td>
+                                    <td class="fee-amount">450.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Laboratory Fee</td>
+                                    <td>Access to specialized equipment and facilities</td>
+                                    <td class="fee-amount">220.00</td>
+                                </tr>
+                                <tr>
+                                    <td>Certificate Fee</td>
+                                    <td>Official workshop completion certificate</td>
+                                    <td class="fee-amount">250  .00</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td><strong>Total Fees</strong></td>
+                                    <td><strong>All inclusive workshop package</strong></td>
+                                    <td class="fee-amount"><strong>1170.00</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="text-align: center; margin-top: 15px; font-style: italic;">All fees are rounded up to the nearest Ghana Cedi as per institutional policy.</p>
+                </section>
+
+                <!-- Registration Section -->
+                <section class="section" id="register">
+                    <h2 class="section-title"><i class="fas fa-user-plus"></i> Register for the Workshop</h2>
+                    <div class="card">
+                        <form id="workshop-registration">
+                            <div class="form-group">
+                                <label for="fullname">Full Name</label>
+                                <input type="text" id="fullname" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="institution">Educational Institution</label>
+                                <input type="text" id="institution" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="level">Current Level</label>
+                                <select id="level" class="form-control" required>
+                                    <option value="">Select your level</option>
+                                    <option value="300">Level 300</option>
+                                    <option value="200">Level 200</option>
+                                    <option value="400">Level 400</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment">Payment Method</label>
+                                <select id="payment" class="form-control" required>
+                                    <option value="">Select payment method</option>
+                                    <option value="mobile-money">Mobile Money</option>
+                                    <option value="bank-transfer">Bank Transfer</option>
+                                    <option value="card">Credit/Debit Card</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-paper-plane"></i> Submit Registration</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer id="contact">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>Contact Us</h3>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-map-marker-alt"></i> Accra, Ghana</a></li>
+                            <li><a href="tel:+233241234567"><i class="fas fa-phone"></i> +233 24 123 4567</a></li>
+                            <li><a href="mailto:info@gtt.edu.gh"><i class="fas fa-envelope"></i> info@gtt.edu.gh</a></li>
+                            <li><a href="#"><i class="fas fa-globe"></i> www.gtt.edu.gh</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                            <li><a href="#about"><i class="fas fa-info-circle"></i> About Workshop</a></li>
+                            <li><a href="#fees"><i class="fas fa-money-bill-wave"></i> Fee Structure</a></li>
+                            <li><a href="#register"><i class="fas fa-user-plus"></i> Registration</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Follow Us</h3>
+                        <ul>
+                            <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                            <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                            <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="card-amount">1,534 GHS</div>
-                <p class="card-description">All items fully paid for previous semester</p>
-            </div>
-            
-            <div class="card owing">
-                <div class="card-header">
-                    <h3 class="card-title">Current Semester Balance</h3>
-                    <div class="card-icon">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </div>
+                <div class="copyright">
+                    <p>&copy; 2023 Ghana Telecommunication Technology. All rights reserved.</p>
                 </div>
-                <div class="card-amount">850 GHS</div>
-                <p class="card-description">Online teaching & learning materials for Level 300</p>
             </div>
+        </footer>
+
+        <!-- Toast Notification -->
+        <div class="toast" id="toast">
+            <i class="fas fa-check-circle"></i>
+            <span id="toast-message">Registration successful!</span>
         </div>
-        
-        <!-- Previous Semester - All Paid -->
-        <div class="semester-section">
-            <div class="semester-header">
-                <span class="semester-badge">COMPLETE</span>
-                <h2>Previous Semester - All Payments Settled</h2>
-            </div>
-            
-            <table class="tools-table complete-table">
-                <thead>
-                    <tr>
-                        <th>Tool Name</th>
-                        <th>Price (GHS)</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><i class="fas fa-paint-brush" style="margin-right: 8px; color: var(--semester-complete);"></i> Graphic Design Software</td>
-                        <td>120</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-code" style="margin-right: 8px; color: var(--semester-complete);"></i> Programming IDE</td>
-                        <td>150</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-film" style="margin-right: 8px; color: var(--semester-complete);"></i> Video Editing Suite</td>
-                        <td>200</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-file-alt" style="margin-right: 8px; color: var(--semester-complete);"></i> Office Productivity Suite</td>
-                        <td>110</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-shield-virus" style="margin-right: 8px; color: var(--semester-complete);"></i> Antivirus Software</td>
-                        <td>80</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-cloud" style="margin-right: 8px; color: var(--semester-complete);"></i> Cloud Storage (1TB)</td>
-                        <td>120</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-database" style="margin-right: 8px; color: var(--semester-complete);"></i> Database Management System</td>
-                        <td>180</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-network-wired" style="margin-right: 8px; color: var(--semester-complete);"></i> Network Simulation Software</td>
-                        <td>160</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-chart-bar" style="margin-right: 8px; color: var(--semester-complete);"></i> Statistical Analysis Package</td>
-                        <td>140</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-cube" style="margin-right: 8px; color: var(--semester-complete);"></i> CAD Software</td>
-                        <td>220</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-server" style="margin-right: 8px; color: var(--semester-complete);"></i> Virtual Machine License</td>
-                        <td>90</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-tasks" style="margin-right: 8px; color: var(--semester-complete);"></i> Project Management Tool</td>
-                        <td>70</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-code-branch" style="margin-right: 8px; color: var(--semester-complete);"></i> Code Repository Subscription</td>
-                        <td>60</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-pencil-ruler" style="margin-right: 8px; color: var(--semester-complete);"></i> UI/UX Design Toolkit</td>
-                        <td>130</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr class="table-footer">
-                        <td>Total</td>
-                        <td>1,534 GHS</td>
-                        <td>
-                            <span style="color: var(--semester-complete);">Fully Paid <i class="fas fa-trophy"></i></span>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        
-        <!-- New Level 300 Online Learning Materials -->
-        <div class="semester-section">
-            <div class="semester-header">
-                <span class="semester-badge current">CURRENT</span>
-                <h2>Level 300 - Online Teaching & Learning Materials</h2>
-            </div>
-            
-            <table class="tools-table">
-                <thead>
-                    <tr>
-                        <th>Material Name</th>
-                        <th>Price (GHS)</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><i class="fas fa-book" style="margin-right: 8px; color: var(--primary);"></i> Advanced Programming E-Books</td>
-                        <td>85</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-video" style="margin-right: 8px; color: var(--primary);"></i> Video Lecture Series Subscription</td>
-                        <td>120</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-laptop-code" style="margin-right: 8px; color: var(--primary);"></i> Cloud Development Environment</td>
-                        <td>150</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-database" style="margin-right: 8px; color: var(--primary);"></i> Advanced Database Systems License</td>
-                        <td>110</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-network-wired" style="margin-right: 8px; color: var(--primary);"></i> Network Security Lab Access</td>
-                        <td>95</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-mobile-alt" style="margin-right: 8px; color: var(--primary);"></i> Mobile Development Framework</td>
-                        <td>80</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-robot" style="margin-right: 8px; color: var(--primary);"></i> AI & Machine Learning Platform</td>
-                        <td>130</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-chalkboard-teacher" style="margin-right: 8px; color: var(--primary);"></i> Virtual Classroom Credits</td>
-                        <td>60</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-file-certificate" style="margin-right: 8px; color: var(--primary);"></i> Online Proctoring Service</td>
-                        <td>40</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr class="table-footer">
-                        <td>Total</td>
-                        <td>850 GHS</td>
-                        <td>
-                            <span style="color: var(--danger);">850 GHS Owing</span>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        
-        <div class="cost-breakdown">
-            <h3 style="margin-bottom: 1rem;">Online Learning Cost Breakdown</h3>
-            <div class="breakdown-item">
-                <span>Digital Textbooks & Resources</span>
-                <span>205 GHS</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Software Platforms & Licenses</span>
-                <span>470 GHS</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Virtual Lab & Environment Access</span>
-                <span>145 GHS</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Administrative & Service Fees</span>
-                <span>30 GHS</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Total Level 300 Online Materials</span>
-                <span>850 GHS</span>
-            </div>
-        </div>
-    </main>
-    
+    </div>
+
     <script>
-        // Add subtle animation to table rows
-        document.addEventListener('DOMContentLoaded', function() {
-            const rows = document.querySelectorAll('.tools-table tbody tr');
-            rows.forEach((row, index) => {
-                row.style.opacity = '0';
-                row.style.transform = 'translateY(10px)';
-                row.style.transition = `opacity 0.3s ease ${index * 0.05}s, transform 0.3s ease ${index * 0.05}s`;
-                setTimeout(() => {
-                    row.style.opacity = '1';
-                    row.style.transform = 'translateY(0)';
-                }, 100);
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const navLinks = document.querySelectorAll('nav a');
+
+        function toggleMenu() {
+            nav.classList.toggle('open');
+            navOverlay.classList.toggle('open');
+            document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+        
+        // Close menu when a link is clicked
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    toggleMenu();
+                }
             });
         });
+
+        // Form submission
+        const registrationForm = document.getElementById('workshop-registration');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        registrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            toastMessage.textContent = 'Registration submitted successfully!';
+            toast.classList.add('show');
+            
+            // Reset form
+            this.reset();
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        });
+
+        // Active navigation link highlighting
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('nav a');
+
+        function setActiveNavItem() {
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${currentSection}`) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', setActiveNavItem);
+
+        // OS-specific styling (example)
+        function detectOS() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            
+            if (/android/i.test(userAgent)) {
+                document.body.classList.add('android');
+            } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                document.body.classList.add('ios');
+            } else if (/win/i.test(userAgent)) {
+                document.body.classList.add('windows');
+            } else if (/mac/i.test(userAgent)) {
+                document.body.classList.add('macos');
+            }
+        }
+
+        detectOS();
     </script>
 </body>
 </html>
