@@ -16,6 +16,8 @@
             --gray: #6c757d;
             --white: #ffffff;
             --semester-complete: #38b000;
+            --trip-color: #7209b7;
+            --warning: #f8961e;
         }
         
         * {
@@ -167,6 +169,11 @@
             color: var(--danger);
         }
         
+        .trip .card-icon {
+            background-color: rgba(114, 9, 183, 0.2);
+            color: var(--trip-color);
+        }
+        
         .card-amount {
             font-size: 1.75rem;
             font-weight: 700;
@@ -185,13 +192,55 @@
             color: var(--danger);
         }
         
+        .trip .card-amount {
+            color: var(--trip-color);
+        }
+        
         .card-description {
             color: var(--gray);
             font-size: 0.9rem;
         }
         
-        /* Semester Sections */
-        .semester-section {
+        /* Congratulation Banner */
+        .congrats-banner {
+            background: linear-gradient(135deg, #38b000, #2a9d00);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(56, 176, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(56, 176, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 176, 0, 0); }
+        }
+        
+        .congrats-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .congrats-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+        
+        .encouragement-text {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            font-style: italic;
+            margin-top: 1rem;
+        }
+        
+        /* Trip Sections */
+        .trip-section {
             margin-bottom: 2.5rem;
         }
         
@@ -217,6 +266,14 @@
             background: var(--primary);
         }
         
+        .semester-badge.trip {
+            background: var(--trip-color);
+        }
+        
+        .semester-badge.warning {
+            background: var(--warning);
+        }
+        
         .tools-table {
             width: 100%;
             border-collapse: collapse;
@@ -234,6 +291,14 @@
         
         .complete-table thead {
             background: linear-gradient(135deg, var(--semester-complete), #2a9d00);
+        }
+        
+        .trip-table thead {
+            background: linear-gradient(135deg, var(--trip-color), #5a0488);
+        }
+        
+        .warning-table thead {
+            background: linear-gradient(135deg, var(--warning), #dc6b04);
         }
         
         .tools-table th {
@@ -272,6 +337,16 @@
         .status-owing {
             background-color: rgba(247, 37, 133, 0.2);
             color: var(--danger);
+        }
+        
+        .status-trip {
+            background-color: rgba(114, 9, 183, 0.2);
+            color: var(--trip-color);
+        }
+        
+        .status-warning {
+            background-color: rgba(248, 150, 30, 0.2);
+            color: var(--warning);
         }
         
         .table-footer {
@@ -359,7 +434,7 @@
         }
         
         .net-cost-display {
-            background: linear-gradient(135deg, #38b000, #2a9d00);
+            background: linear-gradient(135deg, var(--semester-complete), #2a9d00);
             color: white;
             padding: 1.5rem;
             border-radius: 12px;
@@ -412,6 +487,10 @@
             .net-cost-amount {
                 font-size: 2rem;
             }
+            
+            .congrats-title {
+                font-size: 1.5rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -447,15 +526,16 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .card, .tools-table, .cost-breakdown, .timetable, .net-cost-display {
+        .card, .tools-table, .cost-breakdown, .timetable, .net-cost-display, .congrats-banner {
             animation: fadeIn 0.6s ease forwards;
         }
         
         .card:nth-child(1) { animation-delay: 0.1s; }
         .card:nth-child(2) { animation-delay: 0.2s; }
-        .tools-table { animation-delay: 0.3s; }
-        .timetable { animation-delay: 0.4s; }
-        .net-cost-display { animation-delay: 0.5s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .tools-table { animation-delay: 0.4s; }
+        .timetable { animation-delay: 0.5s; }
+        .congrats-banner { animation-delay: 0.6s; }
     </style>
 </head>
 <body>
@@ -490,35 +570,49 @@
     </header>
     
     <main class="container">
+        <!-- Congratulation Banner -->
+        <div class="congrats-banner">
+            <div class="congrats-title">🎉 Congratulations! 🎉</div>
+            <div class="congrats-subtitle">All Educational Costs for Level 300 Have Been Successfully Paid!</div>
+            <p>Your commitment to your education is truly commendable. With all digital tools and learning materials now secured, you're perfectly positioned for an outstanding semester.</p>
+            <div class="encouragement-text">
+                "Keep up the amazing work! You're having an incredible semester, and your dedication is paving the way for your success in Information Technology. Stay focused, continue excelling, and prepare for the exciting educational trip ahead!"
+            </div>
+        </div>
+        
         <div class="dashboard">
             <div class="card complete">
                 <div class="card-header">
-                    <h3 class="card-title">Previous Semester Complete</h3>
+                    <h3 class="card-title">Level 300 Materials - PAID</h3>
                     <div class="card-icon">
-                        <i class="fas fa-trophy"></i>
+                        <i class="fas fa-check-circle"></i>
                     </div>
                 </div>
-                <div class="card-amount">1,534 GHS</div>
-                <p class="card-description">All items fully paid for previous semester</p>
+                <div class="card-amount">2,145 GHS</div>
+                <p class="card-description">All online teaching & learning materials fully paid</p>
+            </div>
+            
+            <div class="card trip">
+                <div class="card-header">
+                    <h3 class="card-title">First Educational Trip - PAID</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-bus"></i>
+                    </div>
+                </div>
+                <div class="card-amount">850 GHS</div>
+                <p class="card-description">Industrial visit to tech companies (Fully paid)</p>
             </div>
             
             <div class="card owing">
                 <div class="card-header">
-                    <h3 class="card-title">Current Semester Balance</h3>
+                    <h3 class="card-title">Second Trip - 50% Marks</h3>
                     <div class="card-icon">
-                        <i class="fas fa-exclamation-circle"></i>
+                        <i class="fas fa-map-marked-alt"></i>
                     </div>
                 </div>
-                <div class="card-amount">2,145 GHS</div>
-                <p class="card-description">Online teaching & learning materials for Level 300</p>
+                <div class="card-amount">1543 GHS</div>
+                <p class="card-description">Carries 50% of course marks - Payment pending</p>
             </div>
-        </div>
-        
-        <!-- Net Cost Display -->
-        <div class="net-cost-display">
-            <div class="net-cost-label">Total Net Cost for Level 300 Semester</div>
-            <div class="net-cost-amount">2,145.00 GHS</div>
-            <div class="net-cost-label">Including all course materials and digital tools</div>
         </div>
         
         <!-- Course Timetable -->
@@ -633,113 +727,130 @@
             </table>
         </div>
         
-        <!-- Previous Semester - All Paid -->
-        <div class="semester-section">
+        <!-- Educational Trips Section -->
+        <div class="trip-section">
             <div class="semester-header">
-                <span class="semester-badge">COMPLETE</span>
-                <h2>Previous Semester - All Payments Settled</h2>
+                <span class="semester-badge trip">EDUCATIONAL TRIPS</span>
+                <h2>Industrial Visits & Field Trips - IT 390 Course Component</h2>
             </div>
             
-            <table class="tools-table complete-table">
+            <!-- First Trip - Paid -->
+            <table class="tools-table trip-table">
                 <thead>
                     <tr>
-                        <th>Tool Name</th>
-                        <th>Price (GHS)</th>
+                        <th>First Educational Trip Details</th>
+                        <th>Cost (GHS)</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><i class="fas fa-paint-brush" style="margin-right: 8px; color: var(--semester-complete);"></i> Graphic Design Software</td>
+                        <td><i class="fas fa-bus" style="margin-right: 8px; color: var(--trip-color);"></i> Transportation (Coach Bus)</td>
+                        <td>250</td>
+                        <td><span class="status status-trip">Paid <i class="fas fa-check"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-utensils" style="margin-right: 8px; color: var(--trip-color);"></i> Meals & Refreshments</td>
                         <td>120</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                        <td><span class="status status-trip">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                     <tr>
-                        <td><i class="fas fa-code" style="margin-right: 8px; color: var(--semester-complete);"></i> Programming IDE</td>
-                        <td>150</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                        <td><i class="fas fa-building" style="margin-right: 8px; color: var(--trip-color);"></i> Facility Access Fees</td>
+                        <td>300</td>
+                        <td><span class="status status-trip">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                     <tr>
-                        <td><i class="fas fa-film" style="margin-right: 8px; color: var(--semester-complete);"></i> Video Editing Suite</td>
-                        <td>200</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                        <td><i class="fas fa-shield-alt" style="margin-right: 8px; color: var(--trip-color);"></i> Insurance & Safety</td>
+                        <td>100</td>
+                        <td><span class="status status-trip">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                     <tr>
-                        <td><i class="fas fa-file-alt" style="margin-right: 8px; color: var(--semester-complete);"></i> Office Productivity Suite</td>
-                        <td>110</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-shield-virus" style="margin-right: 8px; color: var(--semester-complete);"></i> Antivirus Software</td>
+                        <td><i class="fas fa-book" style="margin-right: 8px; color: var(--trip-color);"></i> Educational Materials</td>
                         <td>80</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-cloud" style="margin-right: 8px; color: var(--semester-complete);"></i> Cloud Storage (1TB)</td>
-                        <td>120</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-database" style="margin-right: 8px; color: var(--semester-complete);"></i> Database Management System</td>
-                        <td>180</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-network-wired" style="margin-right: 8px; color: var(--semester-complete);"></i> Network Simulation Software</td>
-                        <td>160</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-chart-bar" style="margin-right: 8px; color: var(--semester-complete);"></i> Statistical Analysis Package</td>
-                        <td>140</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-cube" style="margin-right: 8px; color: var(--semester-complete);"></i> CAD Software</td>
-                        <td>220</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-server" style="margin-right: 8px; color: var(--semester-complete);"></i> Virtual Machine License</td>
-                        <td>90</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-tasks" style="margin-right: 8px; color: var(--semester-complete);"></i> Project Management Tool</td>
-                        <td>70</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-code-branch" style="margin-right: 8px; color: var(--semester-complete);"></i> Code Repository Subscription</td>
-                        <td>60</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-pencil-ruler" style="margin-right: 8px; color: var(--semester-complete);"></i> UI/UX Design Toolkit</td>
-                        <td>130</td>
-                        <td><span class="status status-complete">Completed <i class="fas fa-check-double"></i></span></td>
+                        <td><span class="status status-trip">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr class="table-footer">
-                        <td>Total</td>
-                        <td>1,534 GHS</td>
+                        <td>Total - First Trip (Fully Paid)</td>
+                        <td>1543GHS</td>
                         <td>
-                            <span style="color: var(--semester-complete);">Fully Paid <i class="fas fa-trophy"></i></span>
+                            <span style="color: var(--trip-color);">PAID <i class="fas fa-check-double"></i></span>
                         </td>
                     </tr>
                 </tfoot>
             </table>
+            
+            <!-- Second Trip - 50% Marks -->
+            <table class="tools-table warning-table">
+                <thead>
+                    <tr>
+                        <th>Second Educational Trip Details (Carries 50% Marks)</th>
+                        <th>Cost (GHS)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><i class="fas fa-plane" style="margin-right: 8px; color: var(--warning);"></i> Regional Tech Hub Visit</td>
+                        <td>500</td>
+                        <td><span class="status status-warning">Pending <i class="fas fa-clock"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-hotel" style="margin-right: 8px; color: var(--warning);"></i> Accommodation (2 nights)</td>
+                        <td>450</td>
+                        <td><span class="status status-warning">Pending <i class="fas fa-clock"></i></span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-concierge-bell" style="margin-right: 8px; color: var(--warning);"></i> Full Board Meals</td>
+                        <td>643</td>
+                        <td><span class="status status-warning">Pending <i class="fas fa-clock"></i></span></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="table-footer">
+                        <td>Total - Second Trip (50% Course Marks)</td>
+                        <td>1543  GHS</td>
+                        <td>
+                            <span style="color: var(--warning);">1543  GHS PENDING</span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            
+            <div class="cost-breakdown">
+                <h3 style="margin-bottom: 1rem;">Important Note About Second Trip</h3>
+                <div class="breakdown-item">
+                    <span><i class="fas fa-exclamation-triangle" style="color: var(--warning); margin-right: 8px;"></i> This trip carries 50% of your IT 390 course marks</span>
+                    <span>CRITICAL</span>
+                </div>
+                <div class="breakdown-item">
+                    <span><i class="fas fa-calendar-alt" style="color: var(--primary); margin-right: 8px;"></i> Scheduled for: December 03-07, 2025</span>
+                    <span>5 DAYS</span>
+                </div>
+                <div class="breakdown-item">
+                    <span><i class="fas fa-university" style="color: var(--trip-color); margin-right: 8px;"></i> Visiting: National Data Center & Tech Startups</span>
+                    <span>FIELD WORK</span>
+                </div>
+                <div class="breakdown-item">
+                    <span><i class="fas fa-file-alt" style="color: var(--danger); margin-right: 8px;"></i> Required: Technical report worth 50% of final grade</span>
+                    <span>50% MARKS</span>
+                </div>
+                <div class="breakdown-item">
+                    <span><strong>Payment Deadline: December 2, 2025</strong></span>
+                    <span><strong>1543 GHS</strong></span>
+                </div>
+            </div>
         </div>
         
-        <!-- New Level 300 Online Learning Materials -->
+        <!-- Level 300 Online Learning Materials - Now Paid -->
         <div class="semester-section">
             <div class="semester-header">
-                <span class="semester-badge current">CURRENT</span>
-                <h2>Level 300 - Online Teaching & Learning Materials</h2>
+                <span class="semester-badge current">PAID</span>
+                <h2>Level 300 - Online Teaching & Learning Materials (PAID)</h2>
             </div>
             
-            <table class="tools-table">
+            <table class="tools-table complete-table">
                 <thead>
                     <tr>
                         <th>Material Name</th>
@@ -749,49 +860,49 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><i class="fas fa-book" style="margin-right: 8px; color: var(--primary);"></i> Advanced Programming E-Books</td>
+                        <td><i class="fas fa-book" style="margin-right: 8px; color: var(--semester-complete);"></i> Advanced Programming E-Books</td>
                         <td>285</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                        <td><span class="status status-complete">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                     <tr>
-                        <td><i class="fas fa-video" style="margin-right: 8px; color: var(--primary);"></i> Video Lecture Series Subscription</td>
+                        <td><i class="fas fa-video" style="margin-right: 8px; color: var(--semester-complete);"></i> Video Lecture Series Subscription</td>
                         <td>320</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                        <td><span class="status status-complete">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                     <tr>
-                        <td><i class="fas fa-laptop-code" style="margin-right: 8px; color: var(--primary);"></i> Cloud Development Environment</td>
+                        <td><i class="fas fa-laptop-code" style="margin-right: 8px; color: var(--semester-complete);"></i> Cloud Development Environment</td>
                         <td>350</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                        <td><span class="status status-complete">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                     <tr>
-                        <td><i class="fas fa-database" style="margin-right: 8px; color: var(--primary);"></i> Advanced Database Systems License</td>
+                        <td><i class="fas fa-database" style="margin-right: 8px; color: var(--semester-complete);"></i> Advanced Database Systems License</td>
                         <td>310</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                        <td><span class="status status-complete">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                     <tr>
-                        <td><i class="fas fa-network-wired" style="margin-right: 8px; color: var(--primary);"></i> Network Security Lab Access</td>
+                        <td><i class="fas fa-network-wired" style="margin-right: 8px; color: var(--semester-complete);"></i> Network Security Lab Access</td>
                         <td>295</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                        <td><span class="status status-complete">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                     <tr>
-                        <td><i class="fas fa-mobile-alt" style="margin-right: 8px; color: var(--primary);"></i> Mobile Development Framework</td>
+                        <td><i class="fas fa-mobile-alt" style="margin-right: 8px; color: var(--semester-complete);"></i> Mobile Development Framework</td>
                         <td>180</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                        <td><span class="status status-complete">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                     <tr>
-                        <td><i class="fas fa-robot" style="margin-right: 8px; color: var(--primary);"></i> AI & Machine Learning Platform</td>
+                        <td><i class="fas fa-robot" style="margin-right: 8px; color: var(--semester-complete);"></i> AI & Machine Learning Platform</td>
                         <td>230</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                        <td><span class="status status-complete">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                     <tr>
-                        <td><i class="fas fa-chalkboard-teacher" style="margin-right: 8px; color: var(--primary);"></i> Virtual Classroom Credits</td>
+                        <td><i class="fas fa-chalkboard-teacher" style="margin-right: 8px; color: var(--semester-complete);"></i> Virtual Classroom Credits</td>
                         <td>160</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                        <td><span class="status status-complete">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                     <tr>
-                        <td><i class="fas fa-file-certificate" style="margin-right: 8px; color: var(--primary);"></i> Online Proctoring Service</td>
+                        <td><i class="fas fa-file-certificate" style="margin-right: 8px; color: var(--semester-complete);"></i> Online Proctoring Service</td>
                         <td>140</td>
-                        <td><span class="status status-owing">Owing <i class="fas fa-clock"></i></span></td>
+                        <td><span class="status status-complete">Paid <i class="fas fa-check"></i></span></td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -799,35 +910,18 @@
                         <td>Total</td>
                         <td>2,145 GHS</td>
                         <td>
-                            <span style="color: var(--danger);">2,145 GHS Owing</span>
+                            <span style="color: var(--semester-complete);">FULLY PAID <i class="fas fa-trophy"></i></span>
                         </td>
                     </tr>
                 </tfoot>
             </table>
         </div>
         
-        <div class="cost-breakdown">
-            <h3 style="margin-bottom: 1rem;">Online Learning Cost Breakdown</h3>
-            <div class="breakdown-item">
-                <span>Digital Textbooks & Resources</span>
-                <span>605 GHS</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Software Platforms & Licenses</span>
-                <span>1,070 GHS</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Virtual Lab & Environment Access</span>
-                <span>345 GHS</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Administrative & Service Fees</span>
-                <span>125 GHS</span>
-            </div>
-            <div class="breakdown-item">
-                <span>Total Level 300 Online Materials</span>
-                <span>2,145 GHS</span>
-            </div>
+        <!-- Summary Section -->
+        <div class="net-cost-display">
+            <div class="net-cost-label">Total Investment in Level 300 Education</div>
+            <div class="net-cost-amount">3,745 GHS</div>
+            <div class="net-cost-label">(2,145 GHS Learning Materials + 850 GHS First Trip + 1543  GHS Second Trip)</div>
         </div>
     </main>
     
@@ -844,6 +938,18 @@
                     row.style.transform = 'translateY(0)';
                 }, 100);
             });
+            
+            // Add celebration effect to congratulation banner
+            const congratsBanner = document.querySelector('.congrats-banner');
+            if (congratsBanner) {
+                setTimeout(() => {
+                    congratsBanner.style.transform = 'scale(1.02)';
+                    congratsBanner.style.transition = 'transform 0.5s ease';
+                    setTimeout(() => {
+                        congratsBanner.style.transform = 'scale(1)';
+                    }, 500);
+                }, 1000);
+            }
         });
     </script>
 </body>
